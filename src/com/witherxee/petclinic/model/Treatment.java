@@ -1,19 +1,27 @@
-class Treatment {
-    private String treatmentId;
+package com.witherxee.petclinic.model;
+
+public class Treatment {
+    private int treatmentId;
+    private int appointmentId;
     private String name;
     private String description;
     private double cost;
 
-    public Treatment(String treatmentId, String name, String description, double cost) {
+    public Treatment(int treatmentId, int appointmentId, String name, String description, double cost) {
         this.treatmentId = treatmentId;
+        this.appointmentId = appointmentId;
         this.name = name;
         this.description = description;
         this.cost = cost;
     }
 
     // Getters
-    public String getTreatmentId() {
+    public int getTreatmentId() {
         return treatmentId;
+    }
+
+    public int getAppointmentId() {
+        return appointmentId;
     }
 
     public String getName() {
@@ -29,8 +37,12 @@ class Treatment {
     }
 
     //Setters
-    public void setTreatmentId(String treatmentId) {
+    public void setTreatmentId(int treatmentId) {
         this.treatmentId = treatmentId;
+    }
+
+    public void setAppointmentId(int appointmentId) {
+        this.appointmentId = appointmentId;
     }
 
     public void setName(String name) {

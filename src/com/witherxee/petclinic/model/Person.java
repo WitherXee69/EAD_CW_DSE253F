@@ -1,11 +1,13 @@
-class Person {
+package com.witherxee.petclinic.model;
+
+public class Person {
     private int id;
     private String name;
-    private int phoneNumber;
+    private String phoneNumber;
     private String email;
     private String address;
 
-    public Person(int id, String name, int phoneNumber, String email, String address) {
+    public Person(int id, String name, String phoneNumber, String email, String address) {
         this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
@@ -22,7 +24,7 @@ class Person {
         return name;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
@@ -43,7 +45,7 @@ class Person {
         this.name = name;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 

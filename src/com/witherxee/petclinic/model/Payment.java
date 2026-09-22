@@ -1,11 +1,13 @@
-class Payment {
-    private String paymentId;
-    private String appointmentId;
+package com.witherxee.petclinic.model;
+
+public class Payment {
+    private int paymentId;
+    private int appointmentId;
     private double amount;
     private String currency;
     private String paymentMethod;
 
-    public Payment(String paymentId, String appointmentId, double amount, String currency, String paymentMethod) {
+    public Payment(int paymentId, int appointmentId, double amount, String currency, String paymentMethod) {
         this.paymentId = paymentId;
         this.appointmentId = appointmentId;
         this.amount = amount;
@@ -14,11 +16,11 @@ class Payment {
     }
 
     // Getters
-    public String getPaymentId() {
+    public int getPaymentId() {
         return paymentId;
     }
 
-    public String getAppointmentId() {
+    public int getAppointmentId() {
         return appointmentId;
     }
 
@@ -35,11 +37,11 @@ class Payment {
     }
 
     //Setters
-    public void setPaymentId(String paymentId) {
+    public void setPaymentId(int paymentId) {
         this.paymentId = paymentId;
     }
 
-    public void setAppointmentId(String appointmentId) {
+    public void setAppointmentId(int appointmentId) {
         this.appointmentId = appointmentId;
     }
 

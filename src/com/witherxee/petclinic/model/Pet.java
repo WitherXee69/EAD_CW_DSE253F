@@ -1,24 +1,28 @@
-class Pet {
-    private String petId;
+package com.witherxee.petclinic.model;
+
+import java.time.LocalDate;
+
+public class Pet {
+    private int petId;
+    private int ownerId;
     private String name;
     private String species;
-    private int age;
-    private String ownerId;
+    private LocalDate dob;
     private char gender;
     private String breed;
 
-    public Pet(String petId, String name, String species, int age, String ownerId, char gender, String breed) {
+    public Pet(int petId, String name, String species, LocalDate dob, int ownerId, char gender, String breed) {
         this.petId = petId;
         this.name = name;
         this.species = species;
-        this.age = age;
+        this.dob = dob;
         this.ownerId = ownerId;
         this.gender = gender;
         this.breed = breed;
     }
 
     //Getters
-    public String getPetId() {
+    public int getPetId() {
         return petId;
     }
 
@@ -30,11 +34,11 @@ class Pet {
         return species;
     }
 
-    public int getAge() {
-        return age;
+    public LocalDate getAge() {
+        return dob;
     }
 
-    public String getOwnerId() {
+    public int getOwnerId() {
         return ownerId;
     }
 
@@ -47,7 +51,7 @@ class Pet {
     }
 
     //Setters
-    public void setPetId(String petId) {
+    public void setPetId(int petId) {
         this.petId = petId;
     }
 
@@ -59,11 +63,11 @@ class Pet {
         this.species = species;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setAge(LocalDate dob) {
+        this.dob = dob;
     }
 
-    public void setOwnerId(String ownerId) {
+    public void setOwnerId(int ownerId) {
         this.ownerId = ownerId;
     }
 
