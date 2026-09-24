@@ -1,18 +1,29 @@
 package com.witherxee.petclinic.service;
 
 import com.witherxee.petclinic.dao.PetDAO;
+import com.witherxee.petclinic.dao.CustomerDAO;
+
+import com.witherxee.petclinic.exception.MissingOwnerException;
+
 import com.witherxee.petclinic.model.Pet;
+import com.witherxee.petclinic.model.Customer;
 
 import java.util.List;
 
 public class PetService {
     private final PetDAO petDAO;
+    private final CustomerDAO customerDAO;
 
     public PetService() {
         petDAO = new PetDAO();
+        customerDAO = new CustomerDAO();
     }
 
-    public void addPet(Pet pet) {
+    public void addPet(Pet pet) throws MissingOwnerException {
+        Customer owner = customerDAO.findById(pet.getOwnerId());
+        if (owner == null) {
+            throw new MissingOwnerException("Owner not found for the given pet.");
+        }
         petDAO.create(pet);
     }
 
