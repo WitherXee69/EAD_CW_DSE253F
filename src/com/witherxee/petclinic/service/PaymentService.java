@@ -21,7 +21,7 @@ public class PaymentService {
 
     public void addPayment(Payment payment) throws InvalidAppointmentException {
         Appointment appointment = appointmentDAO.findById(payment.getAppointmentId());
-        boolean isAmountValid = payment.getAmount() >= 0;
+        boolean isAmountValid = payment.getAmount() > 0;
         if (!isAmountValid) {
             throw new InvalidAppointmentException("Payment amount cannot be negative.");
         } else if (appointment == null) {

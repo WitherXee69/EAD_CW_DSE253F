@@ -34,23 +34,17 @@ public class AppointmentService {
                 appointment.getTime()
         );
         boolean isDateTimeValid = DateTimeValidator.isValidAndFuture(
-                appointment.getDate() + " " + appointment.getTime(), "yyyy-MM-dd HH:mm");
+                appointment.getDate() + " " + appointment.getTime(), "uuuu-MM-dd HH:mm");
 
-        if (!available) {
+        if (!isDateTimeValid) {
+            throw new IllegalArgumentException("The appointment date and time must be in the future.");
+        } else if (pet == null) {
+            throw new IllegalArgumentException("The pet with the given ID does not exist.");
+        } else if (veterinarian == null) {
+            throw new IllegalArgumentException("The veterinarian with the given ID does not exist.");
+        } else if (!available) {
             throw new AppointmentConflictException(
                     "The veterinarian is already booked for this date and time."
-            );
-        } else if (pet == null) {
-            throw new AppointmentConflictException(
-                    "The pet does not exist."
-            );
-        } else if (veterinarian == null) {
-            throw new AppointmentConflictException(
-                    "The veterinarian does not exist."
-            );
-        } else if (!isDateTimeValid) {
-            throw new AppointmentConflictException(
-                    "The appointment date and time must be valid"
             );
         }
 
