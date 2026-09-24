@@ -7,6 +7,10 @@ public class Treatment {
     private String description;
     private double cost;
 
+    public Treatment(){
+    
+    }
+
     public Treatment(int treatmentId, int appointmentId, String name, String description, double cost) {
         this.treatmentId = treatmentId;
         this.appointmentId = appointmentId;

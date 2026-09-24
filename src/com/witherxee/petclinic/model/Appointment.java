@@ -12,6 +12,9 @@ public class Appointment {
     private String reason;
     private String status;
 
+    public Appointment() {
+    }
+
     public Appointment(int appointmentId, int customerId, int veterinarianId, int petId, LocalDate date, LocalTime time, String reason, String status) {
         this.appointmentId = appointmentId;
         this.veterinarianId = veterinarianId;

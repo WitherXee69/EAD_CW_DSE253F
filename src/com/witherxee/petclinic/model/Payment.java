@@ -1,17 +1,22 @@
 package com.witherxee.petclinic.model;
 
+import java.time.LocalDate;
+
 public class Payment {
     private int paymentId;
     private int appointmentId;
     private double amount;
-    private String currency;
+    private String status;
+    private LocalDate paymentDate;
     private String paymentMethod;
 
-    public Payment(int paymentId, int appointmentId, double amount, String currency, String paymentMethod) {
+    public Payment(){}
+
+    public Payment(int paymentId, int appointmentId, double amount, LocalDate paymentDate, String paymentMethod) {
         this.paymentId = paymentId;
         this.appointmentId = appointmentId;
         this.amount = amount;
-        this.currency = currency;
+        this.paymentDate = paymentDate;
         this.paymentMethod = paymentMethod;
     }
 
@@ -28,8 +33,12 @@ public class Payment {
         return amount;
     }
 
-    public String getCurrency() {
-        return currency;
+    public LocalDate getPaymentDate() {
+        return paymentDate;
+    }
+
+    public String getStatus() {
+        return status;
     }
 
     public String getPaymentMethod() {
@@ -49,8 +58,12 @@ public class Payment {
         this.amount = amount;
     }
 
-    public void setCurrency(String currency) {
-        this.currency = currency;
+    public void setPaymentDate(LocalDate paymentDate) {
+        this.paymentDate = paymentDate;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public void setPaymentMethod(String paymentMethod) {

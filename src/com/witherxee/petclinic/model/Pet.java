@@ -11,6 +11,8 @@ public class Pet {
     private char gender;
     private String breed;
 
+    public Pet(){}
+
     public Pet(int petId, String name, String species, LocalDate dob, int ownerId, char gender, String breed) {
         this.petId = petId;
         this.name = name;
@@ -34,7 +36,7 @@ public class Pet {
         return species;
     }
 
-    public LocalDate getAge() {
+    public LocalDate getDateOfBirth() {
         return dob;
     }
 
@@ -63,7 +65,7 @@ public class Pet {
         this.species = species;
     }
 
-    public void setAge(LocalDate dob) {
+    public void setDateOfBirth(LocalDate dob) {
         this.dob = dob;
     }
 

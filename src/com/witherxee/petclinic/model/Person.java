@@ -7,6 +7,8 @@ public class Person {
     private String email;
     private String address;
 
+    public Person(){}
+
     public Person(int id, String name, String phoneNumber, String email, String address) {
         this.id = id;
         this.name = name;

@@ -4,6 +4,9 @@ public class Veterinarian extends Person {
     private String licenseNumber;
     private String specialization;
 
+    public Veterinarian() {
+    }
+
     public Veterinarian(int id, String name, String phoneNumber, String email, String address, String licenseNumber, String specialization) {
         super(id, name, phoneNumber, email, address);
         this.licenseNumber = licenseNumber;
