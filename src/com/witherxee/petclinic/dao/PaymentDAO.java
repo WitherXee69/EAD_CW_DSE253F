@@ -1,3 +1,4 @@
+
 package com.witherxee.petclinic.dao;
 
 import com.witherxee.petclinic.model.Payment;
@@ -11,20 +12,19 @@ public class PaymentDAO implements BaseDAO<Payment> {
 
     @Override
     public void create(Payment payment) {
-        String sql = "INSERT INTO payment " +
-                "(appointment_id, amount, payment_date, payment_method, status) " +
-                "VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO payment "
+                + "(appointment_id, amount, payment_date, payment_method) "
+                + "VALUES (?, ?, ?, ?)";
 
-        try (Connection connection = DBConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
 
-            statement.setInt(1, payment.getAppointmentId());
-            statement.setDouble(2, payment.getAmount());
-            statement.setDate(3, Date.valueOf(payment.getPaymentDate()));
-            statement.setString(4, payment.getPaymentMethod());
-            statement.setString(5, payment.getStatus());
+            ps.setInt(1, payment.getAppointmentId());
+            ps.setDouble(2, payment.getAmount());
+            ps.setDate(3, Date.valueOf(payment.getPaymentDate()));
+            ps.setString(4, payment.getPaymentMethod());
 
-            statement.executeUpdate();
+            ps.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -35,15 +35,15 @@ public class PaymentDAO implements BaseDAO<Payment> {
     public Payment findById(int id) {
         String sql = "SELECT * FROM payment WHERE payment_id = ?";
 
-        try (Connection connection = DBConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
 
-            statement.setInt(1, id);
+            ps.setInt(1, id);
 
-            ResultSet result = statement.executeQuery();
-
-            if (result.next()) {
-                return mapPayment(result);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return mapPayment(rs);
+                }
             }
 
         } catch (SQLException e) {
@@ -55,37 +55,37 @@ public class PaymentDAO implements BaseDAO<Payment> {
 
     @Override
     public List<Payment> findAll() {
-        List<Payment> payments = new ArrayList<>();
+        List<Payment> list = new ArrayList<>();
 
-        String sql = "SELECT * FROM payment";
+        String sql = "SELECT * FROM payment ORDER BY payment_id DESC";
 
-        try (Connection connection = DBConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql);
-             ResultSet result = statement.executeQuery()) {
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
 
-            while (result.next()) {
-                payments.add(mapPayment(result));
+            while (rs.next()) {
+                list.add(mapPayment(rs));
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return payments;
+        return list;
     }
 
     public Payment findByAppointmentId(int appointmentId) {
         String sql = "SELECT * FROM payment WHERE appointment_id = ?";
 
-        try (Connection connection = DBConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
 
-            statement.setInt(1, appointmentId);
+            ps.setInt(1, appointmentId);
 
-            ResultSet result = statement.executeQuery();
-
-            if (result.next()) {
-                return mapPayment(result);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return mapPayment(rs);
+                }
             }
 
         } catch (SQLException e) {
@@ -97,21 +97,21 @@ public class PaymentDAO implements BaseDAO<Payment> {
 
     @Override
     public void update(Payment payment) {
-        String sql = "UPDATE payment SET " +
-                "appointment_id = ?, amount = ?, payment_date = ?, " +
-                "payment_method = ?, status = ? WHERE payment_id = ?";
+        String sql = "UPDATE payment SET "
+                + "appointment_id = ?, amount = ?, "
+                + "payment_date = ?, payment_method = ? "
+                + "WHERE payment_id = ?";
 
-        try (Connection connection = DBConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
 
-            statement.setInt(1, payment.getAppointmentId());
-            statement.setDouble(2, payment.getAmount());
-            statement.setDate(3, Date.valueOf(payment.getPaymentDate()));
-            statement.setString(4, payment.getPaymentMethod());
-            statement.setString(5, payment.getStatus());
-            statement.setInt(6, payment.getPaymentId());
+            ps.setInt(1, payment.getAppointmentId());
+            ps.setDouble(2, payment.getAmount());
+            ps.setDate(3, Date.valueOf(payment.getPaymentDate()));
+            ps.setString(4, payment.getPaymentMethod());
+            ps.setInt(5, payment.getPaymentId());
 
-            statement.executeUpdate();
+            ps.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -122,25 +122,34 @@ public class PaymentDAO implements BaseDAO<Payment> {
     public void delete(int id) {
         String sql = "DELETE FROM payment WHERE payment_id = ?";
 
-        try (Connection connection = DBConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
 
-            statement.setInt(1, id);
-            statement.executeUpdate();
+            ps.setInt(1, id);
+            ps.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    private Payment mapPayment(ResultSet result) throws SQLException {
+    private Payment mapPayment(ResultSet rs)
+            throws SQLException {
+
         Payment payment = new Payment();
-        payment.setPaymentId(result.getInt("payment_id"));
-        payment.setAppointmentId(result.getInt("appointment_id"));
-        payment.setAmount(result.getDouble("amount"));
-        payment.setPaymentDate(result.getDate("payment_date").toLocalDate());
-        payment.setPaymentMethod(result.getString("payment_method"));
-        payment.setStatus(result.getString("status"));
+
+        payment.setPaymentId(rs.getInt("payment_id"));
+        payment.setAppointmentId(rs.getInt("appointment_id"));
+        payment.setAmount(rs.getDouble("amount"));
+
+        Date date = rs.getDate("payment_date");
+        if (date != null) {
+            payment.setPaymentDate(date.toLocalDate());
+        }
+
+        payment.setPaymentMethod(
+                rs.getString("payment_method"));
+
         return payment;
     }
 }

@@ -12,8 +12,8 @@ public class VeterinarianDAO implements BaseDAO<Veterinarian> {
     @Override
     public void create(Veterinarian vet) {
         String sql = "INSERT INTO veterinarian " +
-                "(name, phone, email, address, license_number, specialization) " +
-                "VALUES (?, ?, ?, ?, ?, ?)";
+                "(name, phone, email, address) " +
+                "VALUES (?, ?, ?, ?)";
 
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -22,8 +22,6 @@ public class VeterinarianDAO implements BaseDAO<Veterinarian> {
             statement.setString(2, vet.getPhoneNumber());
             statement.setString(3, vet.getEmail());
             statement.setString(4, vet.getAddress());
-            statement.setString(5, vet.getLicenseNumber());
-            statement.setString(6, vet.getSpecialization());
 
             statement.executeUpdate();
 
@@ -78,7 +76,7 @@ public class VeterinarianDAO implements BaseDAO<Veterinarian> {
     @Override
     public void update(Veterinarian vet) {
         String sql = "UPDATE veterinarian SET name = ?, phone = ?, email = ?, " +
-                "address = ?, license_number = ?, specialization = ? " +
+                "address = ?" +
                 "WHERE veterinarian_id = ?";
 
         try (Connection connection = DBConnection.getConnection();
@@ -88,8 +86,6 @@ public class VeterinarianDAO implements BaseDAO<Veterinarian> {
             statement.setString(2, vet.getPhoneNumber());
             statement.setString(3, vet.getEmail());
             statement.setString(4, vet.getAddress());
-            statement.setString(5, vet.getLicenseNumber());
-            statement.setString(6, vet.getSpecialization());
             statement.setInt(7, vet.getId());
 
             statement.executeUpdate();
@@ -122,8 +118,6 @@ public class VeterinarianDAO implements BaseDAO<Veterinarian> {
         vet.setPhoneNumber(result.getString("phone"));
         vet.setEmail(result.getString("email"));
         vet.setAddress(result.getString("address"));
-        vet.setLicenseNumber(result.getString("license_number"));
-        vet.setSpecialization(result.getString("specialization"));
         return vet;
     }
 }

@@ -12,7 +12,7 @@ public class PetDAO implements BaseDAO<Pet> {
     @Override
     public void create(Pet pet) {
         String sql = "INSERT INTO pet " +
-                "(owner_id, name, species, breed, gender, date_of_birth) " +
+                "(owner_id, name, species, breed, gender, dob) " +
                 "VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = DBConnection.getConnection();
@@ -101,7 +101,7 @@ public class PetDAO implements BaseDAO<Pet> {
     @Override
     public void update(Pet pet) {
         String sql = "UPDATE pet SET owner_id = ?, name = ?, species = ?, " +
-                "breed = ?, gender = ?, date_of_birth = ? WHERE pet_id = ?";
+                "breed = ?, gender = ?, dob = ? WHERE pet_id = ?";
 
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -144,7 +144,7 @@ public class PetDAO implements BaseDAO<Pet> {
         pet.setSpecies(result.getString("species"));
         pet.setBreed(result.getString("breed"));
         pet.setGender(result.getString("gender").charAt(0));
-        pet.setDateOfBirth(result.getDate("date_of_birth").toLocalDate());
+        pet.setDateOfBirth(result.getDate("dob").toLocalDate());
         return pet;
     }
 }
