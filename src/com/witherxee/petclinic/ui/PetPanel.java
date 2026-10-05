@@ -43,6 +43,7 @@ public class PetPanel extends javax.swing.JPanel {
         initComponents();
 
         controller = new PetController();
+        cusController = new CustomerController();
 
         applyStyle();
         loadPets();
@@ -526,7 +527,7 @@ public class PetPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
 
         if (!validateFields()) {
             return;
@@ -550,25 +551,15 @@ public class PetPanel extends javax.swing.JPanel {
 
         } catch (MissingOwnerException e) {
 
-            JOptionPane.showMessageDialog(
-                    this,
-                    e.getMessage(),
-                    "Owner Error",
-                    JOptionPane.WARNING_MESSAGE
-            );
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Owner Error", JOptionPane.WARNING_MESSAGE);
 
         } catch (Exception e) {
 
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Unable to add pet.",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE
-            );
+            JOptionPane.showMessageDialog(this, "Unable to add pet.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }
+    }//GEN-LAST:event_btnAddActionPerformed
 
-    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
 
         if (selectedPetId == -1) {
 
@@ -611,9 +602,9 @@ public class PetPanel extends javax.swing.JPanel {
                     JOptionPane.ERROR_MESSAGE
             );
         }
-    }
+    }//GEN-LAST:event_btnUpdateActionPerformed
 
-    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
 
         if (selectedPetId == -1) {
 
@@ -648,13 +639,13 @@ public class PetPanel extends javax.swing.JPanel {
                     JOptionPane.INFORMATION_MESSAGE
             );
         }
-    }
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
-    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         clearFields();
-    }
+    }//GEN-LAST:event_btnClearActionPerformed
 
-    private void tblPetsMouseClicked(java.awt.event.MouseEvent evt) {
+    private void tblPetsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPetsMouseClicked
 
         int row = tblPets.getSelectedRow();
         
@@ -694,7 +685,7 @@ public class PetPanel extends javax.swing.JPanel {
         txtBreed.setText(
                 tblPets.getValueAt(row, 6).toString()
         );
-    }
+    }//GEN-LAST:event_tblPetsMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;

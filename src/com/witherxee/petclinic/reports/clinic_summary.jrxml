@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
- xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
- name="clinic_summary" pageWidth="842" pageHeight="595" orientation="Landscape"
- columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20"
- whenNoDataType="AllSectionsNoDetail" uuid="7d6e6b88-7caa-4a21-a0d0-1cb3b3b73f11">
- <parameter name="REPORT_TITLE" class="java.lang.String"/>
- <queryString language="SQL"><![CDATA[
+<jasperReport name="clinic_summary" language="java" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenNoDataType="AllSectionsNoDetail" uuid="7d6e6b88-7caa-4a21-a0d0-1cb3b3b73f11">
+  <parameter name="REPORT_TITLE" class="java.lang.String"/>
+  <query language="sql"><![CDATA[
 SELECT c.name AS customer_name, c.phone AS customer_phone,
        p.name AS pet_name, p.species, a.appointment_id,
        a.appointment_date, a.appointment_time, a.status AS appointment_status,
@@ -20,49 +15,97 @@ JOIN veterinarian v ON a.veterinarian_id=v.veterinarian_id
 LEFT JOIN treatment t ON a.appointment_id=t.appointment_id
 LEFT JOIN payment pay ON a.appointment_id=pay.appointment_id
 ORDER BY a.appointment_date DESC, a.appointment_time DESC
-]]></queryString>
- <field name="customer_name" class="java.lang.String"/>
- <field name="customer_phone" class="java.lang.String"/>
- <field name="pet_name" class="java.lang.String"/>
- <field name="species" class="java.lang.String"/>
- <field name="appointment_id" class="java.lang.Integer"/>
- <field name="appointment_date" class="java.sql.Timestamp"/>
- <field name="appointment_time" class="java.sql.Time"/>
- <field name="appointment_status" class="java.lang.String"/>
- <field name="veterinarian_name" class="java.lang.String"/>
- <field name="treatment_description" class="java.lang.String"/>
- <field name="medication" class="java.lang.String"/>
- <field name="treatment_cost" class="java.math.BigDecimal"/>
- <field name="payment_amount" class="java.math.BigDecimal"/>
- <field name="payment_date" class="java.sql.Date"/>
- <field name="payment_method" class="java.lang.String"/>
- <title><band height="42">
-  <staticText><reportElement x="0" y="0" width="802" height="28"/><textElement textAlignment="Center"><font size="18" isBold="true"/></textElement><text><![CDATA[Pet Clinic Treatment & Payment Summary]]></text></staticText>
- </band></title>
- <columnHeader><band height="42">
-  <staticText><reportElement mode="Opaque" x="0" y="0" width="65" height="40" backcolor="#DCE7F1"/><textElement><font size="8" isBold="true"/></textElement><text><![CDATA[Appt ID]]></text></staticText>
-  <staticText><reportElement mode="Opaque" x="65" y="0" width="90" height="40" backcolor="#DCE7F1"/><textElement><font size="8" isBold="true"/></textElement><text><![CDATA[Customer]]></text></staticText>
-  <staticText><reportElement mode="Opaque" x="155" y="0" width="80" height="40" backcolor="#DCE7F1"/><textElement><font size="8" isBold="true"/></textElement><text><![CDATA[Pet]]></staticText>
-  <staticText><reportElement mode="Opaque" x="235" y="0" width="90" height="40" backcolor="#DCE7F1"/><textElement><font size="8" isBold="true"/></textElement><text><![CDATA[Veterinarian]]></staticText>
-  <staticText><reportElement mode="Opaque" x="325" y="0" width="100" height="40" backcolor="#DCE7F1"/><textElement><font size="8" isBold="true"/></textElement><text><![CDATA[Appointment]]></staticText>
-  <staticText><reportElement mode="Opaque" x="425" y="0" width="115" height="40" backcolor="#DCE7F1"/><textElement><font size="8" isBold="true"/></textElement><text><![CDATA[Treatment]]></text></staticText>
-  <staticText><reportElement mode="Opaque" x="540" y="0" width="85" height="40" backcolor="#DCE7F1"/><textElement><font size="8" isBold="true"/></textElement><text><![CDATA[Medication]]></text></staticText>
-  <staticText><reportElement mode="Opaque" x="625" y="0" width="60" height="40" backcolor="#DCE7F1"/><textElement><font size="8" isBold="true"/></textElement><text><![CDATA[Cost]]></text></staticText>
-  <staticText><reportElement mode="Opaque" x="685" y="0" width="65" height="40" backcolor="#DCE7F1"/><textElement><font size="8" isBold="true"/></textElement><text><![CDATA[Payment]]></staticText>
-  <staticText><reportElement mode="Opaque" x="750" y="0" width="52" height="40" backcolor="#DCE7F1"/><textElement><font size="8" isBold="true"/></textElement><text><![CDATA[Method]]></staticText>
- </band></columnHeader>
- <detail><band height="30">
-  <textField isStretchWithOverflow="true"><reportElement x="0" y="0" width="65" height="28"/><textFieldExpression><![CDATA[$F{appointment_id}]]></textFieldExpression></textField>
-  <textField isStretchWithOverflow="true"><reportElement x="65" y="0" width="90" height="28"/><textFieldExpression><![CDATA[$F{customer_name}]]></textFieldExpression></textField>
-  <textField isStretchWithOverflow="true"><reportElement x="155" y="0" width="80" height="28"/><textFieldExpression><![CDATA[$F{pet_name}]]></textFieldExpression></textField>
-  <textField isStretchWithOverflow="true"><reportElement x="235" y="0" width="90" height="28"/><textFieldExpression><![CDATA[$F{veterinarian_name}]]></textFieldExpression></textField>
-  <textField isStretchWithOverflow="true"><reportElement x="325" y="0" width="100" height="28"/><textFieldExpression><![CDATA[String.valueOf($F{appointment_date})+" "+String.valueOf($F{appointment_time})]]></textFieldExpression></textField>
-  <textField isStretchWithOverflow="true"><reportElement x="425" y="0" width="115" height="28"/><textFieldExpression><![CDATA[$F{treatment_description}]]></textFieldExpression></textField>
-  <textField isStretchWithOverflow="true"><reportElement x="540" y="0" width="85" height="28"/><textFieldExpression><![CDATA[$F{medication}]]></textFieldExpression></textField>
-  <textField pattern="#,##0.00"><reportElement x="625" y="0" width="60" height="28"/><textFieldExpression><![CDATA[$F{treatment_cost}]]></textFieldExpression></textField>
-  <textField pattern="#,##0.00"><reportElement x="685" y="0" width="65" height="28"/><textFieldExpression><![CDATA[$F{payment_amount}]]></textFieldExpression></textField>
-  <textField isStretchWithOverflow="true"><reportElement x="750" y="0" width="52" height="28"/><textFieldExpression><![CDATA[$F{payment_method}]]></textFieldExpression></textField>
-  <line><reportElement x="0" y="29" width="802" height="1" forecolor="#D0D7DE"/></line>
- </band></detail>
- <pageFooter><band height="20"><textField><reportElement x="650" y="0" width="152" height="18"/><textElement textAlignment="Right"/><textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}]]></textFieldExpression></textField></band></pageFooter>
+]]></query>
+  <field name="customer_name" class="java.lang.String"/>
+  <field name="customer_phone" class="java.lang.String"/>
+  <field name="pet_name" class="java.lang.String"/>
+  <field name="species" class="java.lang.String"/>
+  <field name="appointment_id" class="java.lang.Integer"/>
+  <field name="appointment_date" class="java.sql.Timestamp"/>
+  <field name="appointment_time" class="java.sql.Time"/>
+  <field name="appointment_status" class="java.lang.String"/>
+  <field name="veterinarian_name" class="java.lang.String"/>
+  <field name="treatment_description" class="java.lang.String"/>
+  <field name="medication" class="java.lang.String"/>
+  <field name="treatment_cost" class="java.math.BigDecimal"/>
+  <field name="payment_amount" class="java.math.BigDecimal"/>
+  <field name="payment_date" class="java.sql.Date"/>
+  <field name="payment_method" class="java.lang.String"/>
+  <title height="42">
+    <element kind="staticText" x="0" y="0" width="802" height="28" fontSize="18.0" bold="true" hTextAlign="Center">
+      <text><![CDATA[Pet Clinic Treatment & Payment Summary]]></text>
+    </element>
+  </title>
+  <columnHeader height="42">
+    <element kind="staticText" mode="Opaque" x="0" y="0" width="65" height="40" fontSize="8.0" bold="true" backcolor="#DCE7F1" vTextAlign="Middle">
+      <text><![CDATA[Appt ID]]></text>
+    </element>
+    <element kind="staticText" mode="Opaque" x="65" y="0" width="90" height="40" fontSize="8.0" bold="true" backcolor="#DCE7F1" vTextAlign="Middle">
+      <text><![CDATA[Customer]]></text>
+    </element>
+    <element kind="staticText" mode="Opaque" x="155" y="0" width="80" height="40" fontSize="8.0" bold="true" backcolor="#DCE7F1" vTextAlign="Middle">
+      <text><![CDATA[Pet]]></text>
+    </element>
+    <element kind="staticText" mode="Opaque" x="235" y="0" width="90" height="40" fontSize="8.0" bold="true" backcolor="#DCE7F1" vTextAlign="Middle">
+      <text><![CDATA[Veterinarian]]></text>
+    </element>
+    <element kind="staticText" mode="Opaque" x="325" y="0" width="100" height="40" fontSize="8.0" bold="true" backcolor="#DCE7F1" vTextAlign="Middle">
+      <text><![CDATA[Appointment]]></text>
+    </element>
+    <element kind="staticText" mode="Opaque" x="425" y="0" width="115" height="40" fontSize="8.0" bold="true" backcolor="#DCE7F1" vTextAlign="Middle">
+      <text><![CDATA[Treatment]]></text>
+    </element>
+    <element kind="staticText" mode="Opaque" x="540" y="0" width="85" height="40" fontSize="8.0" bold="true" backcolor="#DCE7F1" vTextAlign="Middle">
+      <text><![CDATA[Medication]]></text>
+    </element>
+    <element kind="staticText" mode="Opaque" x="625" y="0" width="60" height="40" fontSize="8.0" bold="true" backcolor="#DCE7F1" vTextAlign="Middle">
+      <text><![CDATA[Cost]]></text>
+    </element>
+    <element kind="staticText" mode="Opaque" x="685" y="0" width="65" height="40" fontSize="8.0" bold="true" backcolor="#DCE7F1" vTextAlign="Middle">
+      <text><![CDATA[Payment]]></text>
+    </element>
+    <element kind="staticText" mode="Opaque" x="750" y="0" width="52" height="40" fontSize="8.0" bold="true" backcolor="#DCE7F1" vTextAlign="Middle">
+      <text><![CDATA[Method]]></text>
+    </element>
+  </columnHeader>
+  <detail>
+    <band height="30">
+    <element kind="textField" x="0" y="0" width="65" height="28" fontSize="8.0" blankWhenNull="true" textAdjust="StretchHeight">
+      <expression><![CDATA[$F{appointment_id}]]></expression>
+    </element>
+    <element kind="textField" x="65" y="0" width="90" height="28" fontSize="8.0" blankWhenNull="true" textAdjust="StretchHeight">
+      <expression><![CDATA[$F{customer_name}]]></expression>
+    </element>
+    <element kind="textField" x="155" y="0" width="80" height="28" fontSize="8.0" blankWhenNull="true" textAdjust="StretchHeight">
+      <expression><![CDATA[$F{pet_name}]]></expression>
+    </element>
+    <element kind="textField" x="235" y="0" width="90" height="28" fontSize="8.0" blankWhenNull="true" textAdjust="StretchHeight">
+      <expression><![CDATA[$F{veterinarian_name}]]></expression>
+    </element>
+    <element kind="textField" x="325" y="0" width="100" height="28" fontSize="8.0" blankWhenNull="true" textAdjust="StretchHeight">
+      <expression><![CDATA[($F{appointment_date}==null?"":new java.text.SimpleDateFormat("yyyy-MM-dd").format($F{appointment_date}))+" "+($F{appointment_time}==null?"":new java.text.SimpleDateFormat("HH:mm").format($F{appointment_time}))]]></expression>
+    </element>
+    <element kind="textField" x="425" y="0" width="115" height="28" fontSize="8.0" blankWhenNull="true" textAdjust="StretchHeight">
+      <expression><![CDATA[$F{treatment_description}]]></expression>
+    </element>
+    <element kind="textField" x="540" y="0" width="85" height="28" fontSize="8.0" blankWhenNull="true" textAdjust="StretchHeight">
+      <expression><![CDATA[$F{medication}]]></expression>
+    </element>
+    <element kind="textField" x="625" y="0" width="60" height="28" fontSize="8.0" blankWhenNull="true" pattern="#,##0.00" hTextAlign="Right">
+      <expression><![CDATA[$F{treatment_cost}]]></expression>
+    </element>
+    <element kind="textField" x="685" y="0" width="65" height="28" fontSize="8.0" blankWhenNull="true" pattern="#,##0.00" hTextAlign="Right">
+      <expression><![CDATA[$F{payment_amount}]]></expression>
+    </element>
+    <element kind="textField" x="750" y="0" width="52" height="28" fontSize="8.0" blankWhenNull="true" textAdjust="StretchHeight">
+      <expression><![CDATA[$F{payment_method}]]></expression>
+    </element>
+      <element kind="line" positionType="Float" x="0" y="29" width="802" height="1" forecolor="#D0D7DE"/>
+    </band>
+  </detail>
+  <pageFooter height="20">
+    <element kind="textField" x="650" y="0" width="152" height="18" fontSize="8.0" hTextAlign="Right">
+      <expression><![CDATA["Page " + $V{PAGE_NUMBER}]]></expression>
+    </element>
+  </pageFooter>
 </jasperReport>
